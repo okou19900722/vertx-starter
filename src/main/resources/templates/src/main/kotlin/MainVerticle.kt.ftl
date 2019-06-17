@@ -1,11 +1,11 @@
 package ${packageName}
 
 import io.vertx.core.AbstractVerticle
-import io.vertx.core.Future
+import io.vertx.core.<#if vertxVersion=='4.0.0-SNAPSHOT'>Promise<#else>Future</#if>
 
 class MainVerticle : AbstractVerticle() {
 
-  override fun start(startFuture: Future<Void>) {
+  override fun start(start<#if vertxVersion=='4.0.0-SNAPSHOT'>Promise<#else>Future</#if>: <#if vertxVersion=='4.0.0-SNAPSHOT'>Promise<#else>Future</#if><Void>) {
     vertx
       .createHttpServer()
       .requestHandler { req ->
@@ -15,10 +15,10 @@ class MainVerticle : AbstractVerticle() {
       }
       .listen(8888) { http ->
         if (http.succeeded()) {
-          startFuture.complete()
+          start<#if vertxVersion=='4.0.0-SNAPSHOT'>Promise<#else>Future</#if>.complete()
           println("HTTP server started on port 8888")
         } else {
-          startFuture.fail(http.cause());
+          start<#if vertxVersion=='4.0.0-SNAPSHOT'>Promise<#else>Future</#if>.fail(http.cause());
         }
       }
   }

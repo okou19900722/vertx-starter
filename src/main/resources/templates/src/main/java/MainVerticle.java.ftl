@@ -1,22 +1,22 @@
 package ${packageName};
 
 import io.vertx.core.AbstractVerticle;
-import io.vertx.core.Future;
+import io.vertx.core.<#if vertxVersion=='4.0.0-SNAPSHOT'>Promise<#else>Future</#if>;
 
 public class MainVerticle extends AbstractVerticle {
 
   @Override
-  public void start(Future<Void> startFuture) throws Exception {
+  public void start(<#if vertxVersion=='4.0.0-SNAPSHOT'>Promise<#else>Future</#if><Void> start<#if vertxVersion=='4.0.0-SNAPSHOT'>Promise<#else>Future</#if>) throws Exception {
     vertx.createHttpServer().requestHandler(req -> {
       req.response()
         .putHeader("content-type", "text/plain")
         .end("Hello from Vert.x!");
     }).listen(8888, http -> {
       if (http.succeeded()) {
-        startFuture.complete();
+        start<#if vertxVersion=='4.0.0-SNAPSHOT'>Promise<#else>Future</#if>.complete();
         System.out.println("HTTP server started on port 8888");
       } else {
-        startFuture.fail(http.cause());
+        start<#if vertxVersion=='4.0.0-SNAPSHOT'>Promise<#else>Future</#if>.fail(http.cause());
       }
     });
   }

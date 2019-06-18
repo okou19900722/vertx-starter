@@ -117,6 +117,7 @@ public class GeneratorService {
     Language language = project.getLanguage();
     ctx.put("language", language.name().toLowerCase());
     ctx.put("vertxVersion", project.getVertxVersion());
+    ctx.put("promiseType", project.getVertxVersion().compareTo("3.8.0") >= 0 ? "Promise" : "Future");
     Set<String> vertxDependencies = project.getVertxDependencies();
     if (vertxDependencies == null) {
       vertxDependencies = new HashSet<>();
